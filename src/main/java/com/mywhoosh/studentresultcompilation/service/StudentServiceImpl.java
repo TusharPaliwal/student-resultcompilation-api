@@ -2,11 +2,12 @@ package com.mywhoosh.studentresultcompilation.service;
 
 import com.mywhoosh.studentresultcompilation.dto.StudentDTO;
 import com.mywhoosh.studentresultcompilation.enums.StudentStatusEnum;
-import com.mywhoosh.studentresultcompilation.exception.StudentNotFoundException;
 import com.mywhoosh.studentresultcompilation.model.Student;
 import com.mywhoosh.studentresultcompilation.repository.StudentRepository;
+import com.mywhoosh.studentresultcompilation.exception.StudentNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
@@ -22,6 +23,8 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
     private final ModelMapper modelMapper;
+    @Value("${student.not-found.error-message}")
+    private String studentNotFoundErrorMessage;
 
     @Override
     public Flux<StudentDTO> getAll() {
@@ -34,13 +37,13 @@ public class StudentServiceImpl implements StudentService {
     public Mono<StudentDTO> getById(final String id) {
         return studentRepository.findByIdAndStudentStatus(id, StudentStatusEnum.ACTIVE)
                 .map(student -> modelMapper.map(student, StudentDTO.class))
-                .switchIfEmpty(Mono.error(new StudentNotFoundException("Student not found!")));
+                .switchIfEmpty(Mono.error(new StudentNotFoundException(studentNotFoundErrorMessage)));
     }
 
     @Override
     public Mono<StudentDTO> update(final String id, final StudentDTO studentDTO) {
         return studentRepository.findByIdAndStudentStatus(id, StudentStatusEnum.ACTIVE)
-                .switchIfEmpty(Mono.error(new StudentNotFoundException("Student not found!")))
+                .switchIfEmpty(Mono.error(new StudentNotFoundException(studentNotFoundErrorMessage)))
                 .map(student -> {
                     student.setName(studentDTO.getName());
                     student.setFatherName(studentDTO.getFatherName());
@@ -63,7 +66,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Mono<Void> delete(final String id) {
         return studentRepository.findByIdAndStudentStatus(id, StudentStatusEnum.ACTIVE)
-                .switchIfEmpty(Mono.error(new StudentNotFoundException("Student not found!")))
+                .switchIfEmpty(Mono.error(new StudentNotFoundException(studentNotFoundErrorMessage)))
                 .map(student -> {
                     student.setStudentStatus(StudentStatusEnum.DELETED);
                     return student;
