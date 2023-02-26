@@ -1,4 +1,4 @@
-package com.mywhoosh.studentresultcompilation.resource;
+package com.mywhoosh.studentresultcompilation.service;
 
 import com.mywhoosh.studentresultcompilation.dto.ResultDTO;
 import com.mywhoosh.studentresultcompilation.enums.RemarkEnum;
@@ -9,7 +9,6 @@ import com.mywhoosh.studentresultcompilation.model.Result;
 import com.mywhoosh.studentresultcompilation.model.Student;
 import com.mywhoosh.studentresultcompilation.repository.ResultRepository;
 import com.mywhoosh.studentresultcompilation.repository.StudentRepository;
-import com.mywhoosh.studentresultcompilation.service.ResultServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
