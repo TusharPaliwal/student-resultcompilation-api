@@ -18,7 +18,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @DataMongoTest
 public class StudentRepositoryTests {
-
     private static final String NAME = "John";
     private static final String NAME_1 = "Alex";
     private static final String NAME_2 = "Larry";
@@ -100,5 +99,31 @@ public class StudentRepositoryTests {
                 .verifyComplete();
     }
 
+    @Test
+    public void findByRollNumberAndGrade_withExistingRollNumberAndGrade_returnStudent() {
+        studentRepository.deleteAll().block();
+        studentRepository.save(STUDENT_1).block();
 
+        Mono<Student> studentMono =
+                studentRepository.findByRollNumberAndGradeAndStudentStatus(ROLL_NUMBER_1, GRADE_1, StudentStatusEnum.ACTIVE);
+
+        StepVerifier
+                .create(studentMono)
+                .assertNext(student ->
+                        assertThat(STUDENT_1).usingRecursiveComparison().ignoringFields("id").isEqualTo(student)
+                )
+                .verifyComplete();
+    }
+
+    @Test
+    public void findByRollNumberAndGrade_withNonExistingRollNumberAndGrade_returnEmpty() {
+        studentRepository.deleteAll().block();
+        studentRepository.save(STUDENT_1).block();
+
+        Mono<Student> studentMono =
+                studentRepository.findByRollNumberAndGradeAndStudentStatus(18, 8, StudentStatusEnum.ACTIVE);
+
+        assertThat(studentMono.block()).isNull();
+    }
+    
 }

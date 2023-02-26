@@ -17,4 +17,7 @@ public interface StudentRepository extends ReactiveMongoRepository<Student, Stri
     Flux<Student> findAllByStudentStatus(StudentStatusEnum status);
     Mono<Student> findByIdAndStudentStatus(String id, StudentStatusEnum status);
 
+    Mono<Student> findByRollNumberAndGradeAndStudentStatus(int rollNumber, int grade, StudentStatusEnum status);
+
 }
+
