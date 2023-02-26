@@ -8,6 +8,7 @@ import com.mywhoosh.studentresultcompilation.exception.StudentNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,8 +23,9 @@ import reactor.core.publisher.Mono;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentServiceImpl implements StudentService {
-
+    @Autowired
     private StudentRepository studentRepository;
+    @Autowired
     private ModelMapper modelMapper;
     @Value("${student.not-found.error-message}")
     private String studentNotFoundErrorMessage;

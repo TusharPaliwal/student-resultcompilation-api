@@ -10,6 +10,7 @@ import com.mywhoosh.studentresultcompilation.repository.StudentRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,8 +28,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ResultServiceImpl implements ResultService {
     private static final Comparator<Result> MARKS_COMPARATOR =
             Comparator.comparingInt(Result::getObtainedMarks).reversed();
+
+    @Autowired
     private ModelMapper modelMapper;
+    @Autowired
     private ResultRepository resultRepository;
+    @Autowired
     private StudentRepository studentRepository;
     @Value("${result.not-found.error-message}")
     private String resultRecordNotFoundErrorMessage;
