@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -22,7 +24,9 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
-@WebFluxTest(StudentResource.class)
+@WebFluxTest(controllers = StudentResource.class, excludeAutoConfiguration = {
+        ReactiveUserDetailsServiceAutoConfiguration.class, ReactiveSecurityAutoConfiguration.class
+})
 public class StudentResourceTests {
 
     private static final String ID = "63f91c4dcf4ea943b2ab9d0d";

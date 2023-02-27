@@ -24,7 +24,9 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
-@WebFluxTest(ResultResource.class)
+@WebFluxTest(controllers = ResultResource.class, excludeAutoConfiguration = {
+        ReactiveUserDetailsServiceAutoConfiguration.class, ReactiveSecurityAutoConfiguration.class
+})
 public class ResultResourceTests {
 
     private static final String ID = "63f91c4dcf4ea943b2ab9d0d";
