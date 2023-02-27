@@ -46,6 +46,16 @@ public class ExceptionHandlerControllerAdvice {
     }
 
     /**
+     * Handles exceptions failure when result is not found in system.
+     */
+    @ExceptionHandler(ResultRecordNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    ValidationErrorResponse handlesResultRecordNotFoundException(ResultRecordNotFoundException e) {
+        return new ValidationErrorResponse(List.of(new Violation(e.getMessage())));
+    }
+
+    /**
      * Handles exception failure, if supplied method argument is invalid.
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
