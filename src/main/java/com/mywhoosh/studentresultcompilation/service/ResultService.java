@@ -4,6 +4,9 @@ import com.mywhoosh.studentresultcompilation.dto.ResultDTO;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+/**
+ * Provides methods for managing result.
+ */
 public interface ResultService {
 
     Flux<ResultDTO> getAll();

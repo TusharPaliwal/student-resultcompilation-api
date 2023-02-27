@@ -53,7 +53,14 @@ public class Result implements Serializable {
     @LastModifiedDate
     private LocalDateTime updatedOn;
 
-    public RemarkEnum getRemark(){
+    /**
+     * Determines {@link RemarkEnum} based upon percentage of student.
+     *
+     * <p>Student with more than equals to 50 percentage will be considered passed otherwise failed.</>
+     *
+     * @return remark(passed/failed) for student
+     */
+    public RemarkEnum getRemark() {
         int percent = (this.obtainedMarks * 100) / this.totalMarks;
         if (percent >= 50) return RemarkEnum.PASSED;
         else return RemarkEnum.FAILED;
