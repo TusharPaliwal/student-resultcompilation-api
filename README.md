@@ -50,6 +50,8 @@ Test assignment for student result compilation for MyWhoosh. This will cover bel
 "grade": 8
 }'`
 
+**Note** : Application loads 3 student records into db at boot-up time.
+
 # Example curl request for creating result.
 `curl --location --request POST 'localhost:8083/results' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwic3ViIjoiYWRtaW4iLCJpYXQiOjE2Nzc0ODc5MjcsImV4cCI6MTY3NzUxNjcyN30.43_sJS5Mudlrc6H6Jvng2l6mPYKDQ9CQABY_UlCwgWXCWE32fw4wI4Qjm-Hpb7tKsIzLRniBIq1VhrlohdTtbQ' \
