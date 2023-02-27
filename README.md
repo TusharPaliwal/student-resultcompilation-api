@@ -24,7 +24,7 @@ Test assignment for student result compilation for MyWhoosh. This will cover bel
 # To run application locally
 `./gradlew bootRun`
 
-# To run all integration testcases
+# To run all unit testcases
 `./gradlew clean test`
 
 # Curl request for generating token.
