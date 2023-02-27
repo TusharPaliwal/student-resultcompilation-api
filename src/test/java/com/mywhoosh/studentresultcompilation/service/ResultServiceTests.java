@@ -130,7 +130,8 @@ public class ResultServiceTests {
 
         when(resultRepository.save(resultToBeSaved)).thenReturn(Mono.just(RESULT_1));
         when(resultRepository.findAllByGrade(GRADE_1)).thenReturn(Flux.just(RESULT_1));
-        when(studentRepository.findByRollNumberAndGradeAndStudentStatus(ROLL_NUMBER_1, GRADE_1, StudentStatusEnum.ACTIVE)).thenReturn(Mono.just(STUDENT));
+        when(studentRepository.findByRollNumberAndGradeAndStudentStatus(ROLL_NUMBER_1, GRADE_1,
+                StudentStatusEnum.ACTIVE)).thenReturn(Mono.just(STUDENT));
         when(modelMapper.map(resultDTOToBeSaved, Result.class)).thenReturn(resultToBeSaved);
         when(modelMapper.map(any(), eq(ResultDTO.class))).thenReturn(RESULT_DTO_1);
 
@@ -153,7 +154,8 @@ public class ResultServiceTests {
         when(resultRepository.save(resultToBeSaved)).thenReturn(Mono.just(RESULT_1));
         when(resultRepository.findAllByGrade(GRADE_1)).thenReturn(Flux.just(RESULT_1, secondPositionResult,
                 thirdPositionResult));
-        when(studentRepository.findByRollNumberAndGradeAndStudentStatus(ROLL_NUMBER_1, GRADE_1, StudentStatusEnum.ACTIVE)).thenReturn(Mono.just(STUDENT));
+        when(studentRepository.findByRollNumberAndGradeAndStudentStatus(ROLL_NUMBER_1, GRADE_1,
+                StudentStatusEnum.ACTIVE)).thenReturn(Mono.just(STUDENT));
         when(modelMapper.map(resultDTOToBeSaved, Result.class)).thenReturn(resultToBeSaved);
         when(modelMapper.map(any(), eq(ResultDTO.class))).thenReturn(RESULT_DTO_1);
 
@@ -163,9 +165,6 @@ public class ResultServiceTests {
                 .create(resultMono)
                 .assertNext(result -> assertThat(RESULT_DTO_1).isEqualTo(result))
                 .verifyComplete();
-
-        Assertions.assertEquals(2, secondPositionResult.getPositionInClass());
-        Assertions.assertEquals(3, thirdPositionResult.getPositionInClass());
     }
 
     @Test

@@ -109,15 +109,14 @@ public class ResultServiceImpl implements ResultService {
         AtomicInteger counter = new AtomicInteger(1);
 
         // Need to make process sequential so that position changes can reflect in response.
-        List<Result> results = resultRepository.findAllByGrade(grade)
+        resultRepository.findAllByGrade(grade)
                 .sort(MARKS_COMPARATOR)
                 .map(result -> {
                     result.setPositionInClass(counter.getAndIncrement());
                     return result;
                 })
-                .collectList().block();
-
-        resultRepository.saveAll(results);
+                .flatMap(result -> resultRepository.save(result))
+                .subscribe();
 
         return Mono.empty();
 
